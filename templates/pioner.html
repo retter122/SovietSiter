@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Официальная страница КПРФ</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="MainHeder">
+		<a class="MainText" href="/Pioner">Календарь пионера</a>
+
+		<div class="MainMenu">
+			<center>
+				<a href="/Capital" class="Menu">Хроники капитализма</a>
+				<a href="/Voice" class="Menu">Голос пролетариата</a>
+				<a href="/Memory" class="Menu">Памятка гражданина</a>
+				<a href="/Work" class="Menu">Гордость рабочего</a>
+			</center>
+		</div>
+		{% if User %}
+		<a href="/User"><img src="{{User.Avatar}}" class="MiniAvatar"></img></a>
+		{% else %}
+		<a href="/Regist"><img src="{{ url_for('static', filename='Design/UserAvatars/0.jpg') }}" class="MiniAvatar"></img></a>
+		{% endif %}
+		<div class="MainBack"></div>
+		<div class="MainBlur"></div>
+	</div>
+	<div class="MainTitle">
+	<p>1 Мая - День мира и Труда!</p>
+	<p>9 Мая - День великой победы РККА над фашизмом!</p>
+	<p>22 Июня - День начала победоносной Великой Отечественной Войны!</p>
+	<p>2 Августа - День Советскиx Воздушно-Десантных Войск!</p>
+	<p>1 Сентября - День Знаний!</p>
+	<p>2 Сентября - День Окончания Второй Мировой Войны!</p>
+	<p>29 Сентября - День Великих Советских Учителей!</p>
+	<p>7 Ноября - День Великой октяборьской революции!</p>
+	<p>31 Декабря - Новый год!</p>
+	<p>23 Февраля - День защитников отечества!</p>
+	<p>8 Марта - Женский день!</p>
+	<p>12 Апреля - День великой советской космонавтики!</p>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Официальная страница КПРФ</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<center class="RegistTitle">Товарищ!</center>
+	<center class="MiniRegist">Ваша личность не установлена!</center>
+
+	<form method="post">
+	<div class="RegistBack">
+		<center class="RegistMess">ФИО</center>
+		<center class="MainData">
+			<input type="text" size=21 name="userSurname" class="UserData" placeholder="Введите фамилию">
+			<input type="text" size=21 name="userName" class="UserData" placeholder="Введите имя">
+			<input type="text" size=21 name="userFather" class="UserData" placeholder="Введите отчество">
+		</center>
+		<center class="RegistMess">Место жительства</center>
+		<center class="MainData">
+			<input type="text" size=21 name="userCountry" class="UserData" placeholder="Введите страну" list="Resp">
+			<input type="text" size=21 name="userCity" class="UserData" placeholder="Введите город">
+			<input type="text" size=21 name="userAdress" class="UserData" placeholder="Введите адрес">
+		</center>
+		<center class="RegistMess"><a href="/Memory">Капиталисты никогда не дремлют!</a></center>
+		<center class="MainData">
+			<input type="password" name="userPassword" class="UserData" size=27 placeholder="Введите пароль">
+		</center>
+		<div class="ErrorMess">{{Error}}</div>
+		<input type="submit" name="submit_button" value="Назад" class="ExBtn">
+		<input type="submit" name="submit_button" value="Вход" class="RegisBtn">
+		<input type="submit" name="submit_button" value="Регистрация" class="RegisBtn">
+	</div>
+	</form>
+
+	<datalist id="Resp">
+        {% for i in resp %}
+        <option value="{{i}}">
+       	{% endfor %}
+    </datalist>
+</body>
+</html>

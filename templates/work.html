@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Официальная страница КПРФ</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="MainHeder">
+		<a class="MainText" href="/Work">Гордость рабочего</a>
+
+		<div class="MainMenu">
+			<center>
+				<a href="/Capital" class="Menu">Хроники капитализма</a>
+				<a href="/Voice" class="Menu">Голос пролетариата</a>
+				<a href="/Memory" class="Menu">Памятка гражданина</a>
+				<a href="/Pioner" class="Menu">Календарь пионера</a>
+			</center>
+		</div>
+		{% if User %}
+		<a href="/User"><img src="{{User.Avatar}}" class="MiniAvatar"></img></a>
+		{% else %}
+		<a href="/Regist"><img src="{{ url_for('static', filename='Design/UserAvatars/0.jpg') }}" class="MiniAvatar"></img></a>
+		{% endif %}
+		<div class="MainBack"></div>
+		<div class="MainBlur"></div>
+	</div>
+
+	</div class="MainNews">
+		<center class="MainTitle">Великие достижения советского пролетариата!</center>
+		<center class="Slider">
+			{% for i in Sld %}
+			<img class="Slide" src="{{i}}">
+			{% endfor %}
+		</center>
+		{% if news %}
+		<center class="MainTitle">На повестке дня</center>
+		{% endif %}
+	<div>
+
+</body>
+</html>

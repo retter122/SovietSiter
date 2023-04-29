@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Официальная страница КПРФ</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<center class="RegistTitle">Добро пожаловать товарищ</center>
+
+	<div class="RegistBack">
+		<form method=post enctype=multipart/form-data action="/User">
+		<center class="MainData">
+			<input type="text" size=21 name="userSurname" class="UserData" placeholder="Введите фамилию" value="{{User.Surname}}">
+			<input type="text" size=21 name="userName" class="UserData" placeholder="Введите имя" value="{{User.Name}}">
+			<input type="text" size=21 name="userFather" class="UserData" placeholder="Введите отчество" value="{{User.Fathername}}">
+		</center>
+		<center class="RegistMess">Проживающий по адресу</center>
+		<center class="MainData">
+			<input type="text" size=21 name="userCountry" class="UserData" placeholder="Введите страну" value="{{User.Country}}" list="Resp">
+			<input type="text" size=21 name="userCity" class="UserData" placeholder="Введите город" value="{{User.City}}">
+			<input type="text" size=21 name="userAdress" class="UserData" placeholder="Введите адрес" value="{{User.Adress}}">
+		</center>
+		<center class="RegistMess">Имеющий фото профиля</center>
+		<center class="MainData">
+			<label class="UserFil">
+				<input type="file" name="userAvatar" class="UserFile">
+				<span class="Labl"><img src="{{User.Avatar}}" class="Avatar"></span>
+			</label>
+		</center>
+		<div class="ErrorMess">{{Error}}</div>
+		<input type="submit" name="submit_button" value="Назад" class="ExBtn">
+		<input type="submit" name="submit_button" value="Применить" class="RegisBtn">
+		</form>
+	</div>
+
+	<form method=post enctype=multipart/form-data>
+	<center class="UsBlogs">
+		{% if User.Blogs %}
+		<center class="MainTitle">Ваши записи</center>
+		{% for i in User.Blogs %}
+		<h1>{{i.Name}}</h1>
+		<h3>{{i.Text}}</h3>
+		{% endfor %}
+		{% else %}
+		<center class="MainTitle">У вас нет записей</center>
+		{% endif %}
+		{% if Cblog %}
+		<p><input type="text" size=21 name="H1" class="UserData" placeholder="Введите заголовок"></p>
+		<p><textarea class="UserData" name="TextData" cols=40 rows=20></textarea></p>
+		<input type="submit" name="submit_button" value="Сохранить запись" class="RegisBtn">
+		{% else %}
+		<input type="submit" name="submit_button" value="Создать запись" class="RegisBtn">
+		{% endif %}
+	</center>
+	</form>
+
+    <datalist id="Resp">
+        {% for i in resp %}
+        <option value="{{i}}">
+       	{% endfor %}
+    </datalist>
+</body>
+</html>
