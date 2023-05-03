@@ -8,7 +8,6 @@ Users = dict()
 with open('static/Users.json') as Usrs:
     Users = json.load(Usrs)
 
-User = dict()
 nextId = 0
 if Users:
     nextId = int(max(list(Users.keys())))
@@ -20,10 +19,10 @@ SovietRespulics = [
     "Белорусская ССР",
     "Украинская ССР",
     "Узбекская ССР",
-    "Казахская ССР"
-    "Туркменская ССР"
-    "Кыгызская ССР"
-    "Таджикская CCР"
+    "Казахская ССР",
+    "Туркменская ССР",
+    "Кыгызская ССР",
+    "Таджикская CCР",
     "Армянская ССР",
     "Грузинская ССР",
     "Азейрбайджанская ССР",
@@ -43,19 +42,24 @@ SovietRespulics = [
     "Албанская ДР",
 ]
 
-@app.route('/')
 @app.route('/Capital')
-def MainMenu():
-    m = [f"static/Design/Magazine/{str(i + 1)}.jpg" for i in range(6)]
+@app.route('/Capital/<string:UID>')
+def MainMenu(UID="-1"):
+    User = Users.get(UID)
+    m = [url_for('static', filename=f"Design/Magazine/{str(i + 1)}.jpg") for i in range(6)]
     return render_template("main.html", User=User, magaz=m, news=[])
 
 @app.route("/Work")
-def Work():
-    m = [f"static/Design/Work/{str(i)}.jpg" for i in range(11)]
+@app.route("/Work/<string:UID>")
+def Work(UID="-1"):
+    User = Users.get(UID)
+    m = [url_for('static', filename=f"Design/Work/{str(i)}.jpg") for i in range(11)]
     return render_template("work.html", User=User, Sld=m)
 
 @app.route('/Voice')
-def VoiceProlate():
+@app.route('/Voice/<string:UID>')
+def VoiceProlate(UID="-1"):
+    User = Users.get(UID)
     Blgs = []
     for i in Users.keys():
         for j in Users[i].get("Blogs"):
@@ -66,19 +70,24 @@ def VoiceProlate():
     return render_template("voice.html", User=User, Blogs=Blgs)
 
 @app.route('/Memory')
-def Memory():
-    m = [f"static/Design/Memory/{str(i + 1)}.jpg" for i in range(memSize)]
+@app.route('/Memory/<string:UID>')
+def Memory(UID="-1"):
+    User = Users.get(UID)
+    m = [url_for('static', filename=f"Design/Memory/{str(i + 1)}.jpg") for i in range(memSize)]
     return render_template("mem.html", mems=m, User=User)
 
 @app.route('/Pioner')
-def Pioner():
+@app.route('/Pioner/<string:UID>')
+def Pioner(UID="-1"):
+    User = Users.get(UID)
     return render_template("pioner.html", User=User)
 
 @app.route('/Regist', methods=['GET', 'POST'])
 def Regist():
-    global nextId, User, Users
+    global nextId, Users
     Err = ""
     f = True
+    User = dict()
     if request.method == 'POST':
         if request.form['submit_button'] == 'Назад':
             return MainMenu()
@@ -116,7 +125,7 @@ def Regist():
                 nextId += 1
                 with open('static/Users.json', 'w') as Usrs:
                     json.dump(Users, Usrs)
-                    return MainMenu()
+                    return MainMenu("-1")
 
         elif request.form['submit_button'] == 'Вход':
             f = 0
@@ -144,7 +153,7 @@ def Regist():
                 User["Avatar"] = Users[idu]["Avatar"]
                 User["Blogs"] = Users[idu]["Blogs"]
                 User["Id"] = idu
-                return MainMenu()
+                return MainMenu(User["Id"])
 
             elif f == 1:
                 Err = "Товарищ, вы ввели не правильный пароль!"
@@ -155,14 +164,15 @@ def Regist():
 
     return render_template("registration.html", Error=Err, resp=SovietRespulics)
 
-
 @app.route('/User', methods=['GET', 'POST'])
-def UserPage():
+@app.route('/User/<string:UID>', methods=['GET', 'POST'])
+def UserPage(UID="-1"):
     Err = ""
     CrBl = False
+    User = Users.get(UID)
     if request.method == 'POST':
         if request.form['submit_button'] == 'Назад':
-            return MainMenu()
+            return MainMenu(User["Id"])
 
         if request.form['submit_button'] == 'Применить':
             f = True
@@ -180,11 +190,11 @@ def UserPage():
                 User["Adress"] = request.form['userAdress']
                 if request.files['userAvatar']:
                     request.files['userAvatar'].save(f'static/Design/UserAvatars/{int(User["Id"]) + 1}.jpg')
-                    User["Avatar"] = f'static/Design/UserAvatars/{int(User["Id"]) + 1}.jpg'
+                    User["Avatar"] = url_for('static', filename=f"Design/UserAvatars/{int(User['Id']) + 1}.jpg")
                 Users[User["Id"]] = User
                 with open('static/Users.json', 'w') as Usrs:
                     json.dump(Users, Usrs)
-                    return MainMenu()
+                    return MainMenu(User["Id"])
 
             else:
                 Err = "Товарищ, такие данные пользователя уже заняты!"
@@ -210,7 +220,7 @@ def UserPage():
             Users[User["Id"]] = User
             with open('static/Users.json', 'w') as Usrs:
                 json.dump(Users, Usrs)
-                return MainMenu()
+                return MainMenu(User["Id"])
 
     return render_template("user.html", User=User, resp=SovietRespulics, Error=Err, Cblog=CrBl)
 

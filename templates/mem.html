@@ -7,18 +7,29 @@
 </head>
 <body>
 	<div class="MainHeder">
-		<a class="MainText" href="/Memory">Памятка гражданина</a>
+		{% if User %}
+		<a class="MainText" href="/Memory/{{User.Id}}">Памятка гражданина</a>
+		{% else %}
+		<a class="MainText" href="/Memory/-1">Памятка гражданина</a>
+		{% endif %}
 
 		<div class="MainMenu">
 			<center>
-				<a href="/Capital" class="Menu">Хроники капитализма</a>
-				<a href="/Voice" class="Menu">Голос пролетариата</a>
-				<a href="/Pioner" class="Menu">Календарь пионера</a>
-				<a href="/Work" class="Menu">Гордость рабочего</a>
+				{% if User %}
+				<a href="/Capital/{{User.Id}}" class="Menu">Хроники капитализма</a>
+				<a href="/Voice/{{User.Id}}" class="Menu">Голос пролетариата</a>
+				<a href="/Pioner/{{User.Id}}" class="Menu">Календарь пионера</a>
+				<a href="/Work/{{User.Id}}" class="Menu">Гордость рабочего</a>
+				{% else %}
+				<a href="/Capital/-1" class="Menu">Хроники капитализма</a>
+				<a href="/Voice/-1" class="Menu">Голос пролетариата</a>
+				<a href="/Pioner/-1" class="Menu">Календарь пионера</a>
+				<a href="/Work/-1" class="Menu">Гордость рабочего</a>
+				{% endif %}
 			</center>
 		</div>
 		{% if User %}
-		<a href="/User"><img src="{{User.Avatar}}" class="MiniAvatar"></img></a>
+		<a href="/User/{{User.Id}}"><img src="{{User.Avatar}}" class="MiniAvatar"></img></a>
 		{% else %}
 		<a href="/Regist"><img src="{{ url_for('static', filename='Design/UserAvatars/0.jpg') }}" class="MiniAvatar"></img></a>
 		{% endif %}

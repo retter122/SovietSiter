@@ -9,7 +9,7 @@
 	<center class="RegistTitle">Добро пожаловать товарищ</center>
 
 	<div class="RegistBack">
-		<form method=post enctype=multipart/form-data action="/User">
+		<form method="post" enctype=multipart/form-data action="/User/{{User.Id}}">
 		<center class="MainData">
 			<input type="text" size=21 name="userSurname" class="UserData" placeholder="Введите фамилию" value="{{User.Surname}}">
 			<input type="text" size=21 name="userName" class="UserData" placeholder="Введите имя" value="{{User.Name}}">
