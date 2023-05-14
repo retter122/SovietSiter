@@ -8,6 +8,7 @@ libraries:
   2. Open CMD
   3. Insert "pip install Flask"
   4. Turn on the Atomic Heart playlist
+  5. Start main.py
 
 annotation:
   Привет товарищ! Этот сайт создан для просвещения людей и объединения под трудовым красным знаменем пролетариев
